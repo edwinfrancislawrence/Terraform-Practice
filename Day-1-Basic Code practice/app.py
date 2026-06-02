@@ -1,1 +1,1 @@
-print(this is for testing)
+print(testing)
