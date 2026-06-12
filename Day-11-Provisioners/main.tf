@@ -99,50 +99,53 @@ resource "aws_instance" "server" {
     timeout     = "2m"
   }
 
-  provisioner "file" {
-    source      = "file10"
-    destination = "/home/ec2-user/file10" #destination path on the remote instance copy the file10 from local to remote instance with the name file10
-  }
+#   provisioner "file" {
+#     source      = "file10"
+#     destination = "/home/ec2-user/file10" #destination path on the remote instance copy the file10 from local to remote instance with the name file10
+#   }
 
- provisioner "remote-exec" {
+#  provisioner "remote-exec" {
+#     inline = [
+#       "mkdir -p /home/ec2-user",
+#       "touch /home/ec2-user/file200",
+#       "echo 'hello from Edwin devops nareshit' >> /home/ec2-user/file200"
+#     ]
+#   }
+#    provisioner "local-exec" {
+#     command = "touch file500" 
+    
+   
+#  }
+ }
+resource "null_resource" "run_script" {
+    connection {
+      host        = aws_instance.server.public_ip
+      user        = "ec2-user"
+      private_key = file("~/.ssh/id_ed25519")
+    }
+    provisioner "file" {
+    source      = "dev.sh"
+    destination = "/home/ec2-user/dev.sh" #destination path on the remote instance copy the file10 from local to remote instance with the name file10
+  }
+    provisioner "remote-exec" {
     inline = [
       "mkdir -p /home/ec2-user",
       "touch /home/ec2-user/file200",
-      "echo 'hello from Edwin devops nareshit' >> /home/ec2-user/file200"
+      "echo 'hello from Edwin devops professional (Trigger testing second time)' >> /home/ec2-user/file200"
     ]
-  }
-   provisioner "local-exec" {
-    command = "touch file500" 
-    
-   
- }
-#  }
-# resource "null_resource" "run_script" {
-#   provisioner "remote-exec" {
-#     connection {
-#       host        = aws_instance.server.public_ip
-#       user        = "ubuntu"
-#       private_key = file("~/.ssh/id_ed25519")
-#     }
-#      provisioner "file" {
-#     source      = "file10"
-#     destination = "/home/ubuntu/dev.sh" #destination path on the remote instance copy the file10 from local to remote instance with the name file10
-#   }
-
-
-#     inline = [
-#       "echo 'hello from veera Nareshit' >> /home/ubuntu/file200",
+    # inline = [
+    #   "echo 'hello from Edwin Nareshit' >> /home/ubuntu/file200",
       
-#         #"bash /home/ubuntu/dev.sh" # Assuming test.sh is already on the instance 
-#     ]
-#   }
+        #"bash /home/ubuntu/dev.sh" # Assuming test.sh is already on the instance 
+    # ]
+  }
 
 #   triggers = {
 #     always_run = "${timestamp()}" # This will ensure the provisioner runs every time you apply, as the timestamp will always change.
 #   }
-#   triggers = {
-#   script_hash = filemd5("dev.sh") # Rerun only if script changes
-# }
+  triggers = {
+  script_hash = filemd5("dev.sh") # Rerun only if script changes
+}
 }
 
 
