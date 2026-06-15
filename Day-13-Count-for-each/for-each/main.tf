@@ -1,6 +1,6 @@
 variable "env" {
    type = list(string)
-   default = [ "dev","prod" ]
+   default = [ "developement", "testing", "production" ]
   
 }
 
