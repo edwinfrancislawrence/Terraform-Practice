@@ -28,32 +28,32 @@
 
 
 
-## Example-2
-# variable "create_bucket" {
-#   type    = bool
-#   default = false
-# }
+# Example-2
+variable "create_bucket" {
+  type    = bool
+  default = true
+}
 
-# resource "aws_s3_bucket" "example" {
-#   count  = var.create_bucket ? 1 : 0
-#   bucket = "my-terraform-example"
-# }
+resource "aws_s3_bucket" "example" {
+  count  = var.create_bucket ? 1 : 0
+  bucket = "my-terraform-example"
+}
 
 #Example-3
-variable "environment" {
-  type    = string
-  default = "test"
-}
+# variable "environment" {
+#   type    = string
+#   default = "test"
+# }
 
-resource "aws_instance" "example" {
-  count         = var.environment == "prod" ? 3 : 1
-  ami           = "ami-09e69ca1171857250"
-  instance_type = "t2.micro"
+# resource "aws_instance" "example" {
+#   count         = var.environment == "prod" ? 3 : 1
+#   ami           = "ami-09e69ca1171857250"
+#   instance_type = "t2.micro"
 
-  tags = {
-    Name = "example-${count.index}"
-  }
-}
+#   tags = {
+#     Name = "example-${count.index}"
+#   }
+# }
 
 # #In this case:
 # #If var.environment == "prod" â count = 3
