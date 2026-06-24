@@ -1,7 +1,7 @@
 #!/bin/bash
 sudo yum update -y
 
-#---------------git install ---------------
+#---------------git install ------------------------
 
 sudo yum install git -y
 
